@@ -1,0 +1,8 @@
+#!/bin/sh
+
+gocd_version=$(echo ${DOCKER_TAG} | awk 'BEGIN {FS="_"} {print $1}')
+uid=$(echo ${DOCKER_TAG} | awk 'BEGIN {FS="_"} {print $2}')
+gid=$(echo ${DOCKER_TAG} | awk 'BEGIN {FS="_"} {print $3}')
+
+echo "building with GOCD_VERSION=${gocd_version} UID=${uid} GID=${gid} based on DOCKER_TAG=${DOCKER_TAG}"
+docker build --build-arg GOCD_VERSION=${gocd_version} --build-arg UID=${uid} --build-arg GID=${gid} -t ${IMAGE_NAME} .
